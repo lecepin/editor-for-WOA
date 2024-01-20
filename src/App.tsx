@@ -25,7 +25,7 @@ function loadThemeCss(css: string) {
 }
 
 function loadHighlightLinkCss(name: string) {
-  const url = `https://g.alicdn.com/code/lib/highlight.js/7.3/styles/${name}.min.css`;
+  const url = `https://g.alicdn.com/code/lib/highlight.js/11.9.0/styles/${name}.min.css`;
   const existingLink = document.getElementById("_theme-highlight-link");
   if (existingLink) {
     existingLink.setAttribute("href", url);
