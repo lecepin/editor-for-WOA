@@ -34,6 +34,12 @@ function loadHighlightLinkCss(name: string) {
     link.id = "_theme-highlight-link";
     link.setAttribute("rel", "stylesheet");
     link.setAttribute("href", url);
+    link.onerror = () => {
+      link.setAttribute(
+        "href",
+        "`https://g.alicdn.com/code/lib/highlight.js/11.9.0/styles/default.min.css`"
+      );
+    };
     document.head.appendChild(link);
   }
 }
