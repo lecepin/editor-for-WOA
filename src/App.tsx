@@ -37,7 +37,7 @@ function loadHighlightLinkCss(name: string) {
     link.onerror = () => {
       link.setAttribute(
         "href",
-        "`https://g.alicdn.com/code/lib/highlight.js/11.9.0/styles/default.min.css`"
+        "https://g.alicdn.com/code/lib/highlight.js/11.9.0/styles/default.min.css"
       );
     };
     document.head.appendChild(link);
