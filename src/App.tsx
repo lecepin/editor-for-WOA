@@ -45,14 +45,13 @@ function loadHighlightLinkCss(name: string) {
 }
 
 async function uploadImg(file: File): Promise<{ name: string }> {
-  const data = new FormData();
+  const formData = new FormData();
+  formData.append("image", file);
 
-  data.append("img", file);
-
-  return fetch("./update-img", {
-    method: "post",
-    body: data,
-  }).then((data) => data.json());
+  return fetch("/file.php", {
+    method: "POST",
+    body: formData,
+  }).then((response) => response.json());
 }
 
 const plugins: BytemdPlugin[] = [
