@@ -62,12 +62,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       exit;
     }
 
-    $finfo = new finfo(FILEINFO_MIME_TYPE);
-    $fileType = $finfo->file($image['tmp_name']);
+    $imageInfo = @getimagesize($image['tmp_name']);
+    if ($imageInfo === false) {
+      echo json_encode(['success' => false, 'message' => 'Invalid file or not an image.']);
+      exit;
+    }
 
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    $allowedTypes = [IMAGETYPE_JPEG => 'image/jpeg', IMAGETYPE_PNG => 'image/png'];
+    $fileType = $allowedTypes[$imageInfo[2]] ?? null;
     if (!in_array($fileType, $allowedTypes)) {
-      die("Invalid file type.");
+      echo json_encode(['success' => false, 'message' => 'Invalid file type.']);
+      exit;
     }
 
     if (checkDirSize($uploadDir, $maxDirSize)) {
