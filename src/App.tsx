@@ -16,6 +16,12 @@ import pluginEstree from "prettier/plugins/estree";
 import themes from "./theme";
 import type { ThemeKey } from "./theme";
 
+function addSpaceBetweenChineseAndEnglish(text: string) {
+  return text
+    .replace(/([一-龥])([A-Za-z])/g, "$1 $2")
+    .replace(/([A-Za-z])([一-龥])/g, "$1 $2");
+}
+
 function loadThemeCss(css: string) {
   const existingStyle = document.getElementById("_theme-style");
   if (existingStyle) {
@@ -114,30 +120,33 @@ export default () => {
             type: "action",
             async click() {
               try {
-                const formattedMarkdown = await prettier.format(value, {
-                  arrowParens: "always",
-                  bracketSpacing: true,
-                  endOfLine: "lf",
-                  htmlWhitespaceSensitivity: "css",
-                  insertPragma: false,
-                  singleAttributePerLine: false,
-                  bracketSameLine: false,
-                  jsxBracketSameLine: false,
-                  jsxSingleQuote: false,
-                  printWidth: 80,
-                  proseWrap: "preserve",
-                  quoteProps: "as-needed",
-                  requirePragma: false,
-                  semi: true,
-                  singleQuote: false,
-                  tabWidth: 2,
-                  trailingComma: "es5",
-                  useTabs: false,
-                  embeddedLanguageFormatting: "auto",
-                  vueIndentScriptAndStyle: false,
-                  parser: "markdown",
-                  plugins: [pluginMarkdown, pluginBabel, pluginEstree],
-                });
+                const formattedMarkdown = await prettier.format(
+                  addSpaceBetweenChineseAndEnglish(value),
+                  {
+                    arrowParens: "always",
+                    bracketSpacing: true,
+                    endOfLine: "lf",
+                    htmlWhitespaceSensitivity: "css",
+                    insertPragma: false,
+                    singleAttributePerLine: false,
+                    bracketSameLine: false,
+                    jsxBracketSameLine: false,
+                    jsxSingleQuote: false,
+                    printWidth: 80,
+                    proseWrap: "preserve",
+                    quoteProps: "as-needed",
+                    requirePragma: false,
+                    semi: true,
+                    singleQuote: false,
+                    tabWidth: 2,
+                    trailingComma: "es5",
+                    useTabs: false,
+                    embeddedLanguageFormatting: "auto",
+                    vueIndentScriptAndStyle: false,
+                    parser: "markdown",
+                    plugins: [pluginMarkdown, pluginBabel, pluginEstree],
+                  }
+                );
 
                 setValue(formattedMarkdown);
               } catch (error) {
@@ -174,7 +183,7 @@ export default () => {
             (res) =>
               res.map((r) => ({
                 title: "",
-                url: r.name,
+                url: location.host + r.name,
                 alt: "",
               }))
           );
