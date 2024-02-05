@@ -183,7 +183,7 @@ export default () => {
             (res) =>
               res.map((r) => ({
                 title: "",
-                url: location.host + r.name,
+                url: location.origin + r.name,
                 alt: "",
               }))
           );
